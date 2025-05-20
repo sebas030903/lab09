@@ -25,6 +25,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.tecsup.lab09.ui.theme.Lab09Theme
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -71,12 +77,11 @@ fun ProgPrincipal9() {
     val navController = rememberNavController()
 
     Scaffold(
-        topBar =    { BarraSuperior() },
+        topBar = { BarraSuperior() },
         bottomBar = { BarraInferior(navController) },
-        content =   { paddingValues -> Contenido(paddingValues, navController, servicio) }
+        content = { paddingValues -> Contenido(paddingValues, navController, servicio) }
     )
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -128,13 +133,15 @@ fun Contenido(
     ) {
         NavHost(
             navController = navController,
-            startDestination = "inicio" // Ruta de inicio
+            startDestination = "inicio"
         ) {
             composable("inicio") { ScreenInicio() }
 
             composable("posts") { ScreenPosts(navController, servicio) }
-            composable("postsVer/{id}", arguments = listOf(
-                navArgument("id") { type = NavType.IntType} )
+
+            composable(
+                "postsVer/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
             ) {
                 ScreenPost(navController, servicio, it.arguments!!.getInt("id"))
             }
