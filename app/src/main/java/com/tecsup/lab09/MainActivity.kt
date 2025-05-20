@@ -40,12 +40,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Lab09Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            setContent {
+                Lab09Theme {
+                    ProgPrincipal9()  // Aquí cargas tu función con toda la navegación y UI
                 }
             }
         }
